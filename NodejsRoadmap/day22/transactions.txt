@@ -1,0 +1,2 @@
+Transaction1: Credit $100
+Transaction2: Debt $50
