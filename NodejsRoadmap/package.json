@@ -17,6 +17,9 @@
     "express-session": "^1.19.0",
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^7.0.0",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^7.0.13",
+    "ws": "^8.19.0"
   }
 }
