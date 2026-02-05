@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:day25": "mocha day25/test/**/*.test.js"
   },
   "keywords": [],
   "author": "",
@@ -21,5 +21,9 @@
     "node-cron": "^4.2.1",
     "nodemailer": "^7.0.13",
     "ws": "^8.19.0"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "mocha": "^11.7.5"
   }
 }
