@@ -1,10 +1,10 @@
-const { AppolloServer } = require('@apollo/server');
+const { ApolloServer } = require('@apollo/server');
 const { startStandaloneServer } = require('@apollo/server/standalone');
 const typeDefs = require('./schema');
 const resolvers = require('./resolves');
 
 // Create Apollo Server instance
-const server = new AppolloServer({
+const server = new ApolloServer({
     typeDefs,
     resolvers,
     // Custom error formatting (optional)
