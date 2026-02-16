@@ -1,22 +1,22 @@
-const { users, posts } = require('./data');
+const data = require('./data');
 
 const resolvers = {
     // Query resolvers
     Query: {
-        users: () => users,
+        users: () => data.users,
 
         user: (parent, args) => {
-            const user = users.find(user => user.id === args.id);
+            const user = data.users.find(user => user.id === args.id);
             if (!user) {
                 throw new Error(`User with ID ${args.id} not found`);
             }
             return user;
         },
 
-        posts: () => posts,
-
+        posts: () => data.posts,
+    
         post: (parent, args) => {
-            const post = post.find(post => post.id === args.id);
+            const post = data.posts.find(post => post.id === args.id);
             if (!post) {
                 throw new Error(`Post with ID ${args.id} not found`);
             }
@@ -24,7 +24,7 @@ const resolvers = {
         },
 
         postsByAuthor: (parent, args) => {
-            return posts.filter(p => p.authorId === args.authorId);
+            return data.posts.filter(p => p.authorId === args.authorId);
         }
     },
 
@@ -39,25 +39,25 @@ const resolvers = {
             }
 
             // Check if email already exists
-            const existingUser = users.find(u => u.email === email);
+            const existingUser = data.users.find(u => u.email === email);
             if (existingUser) {
                 throw new Error('Email already exists');
             }
 
             const newUser = {
-                id: String(users.length + 1),
+                id: String(data.users.length + 1),
                 name,
                 email,
                 age: age || null
             };
 
-            users.push(newUser);
+            data.users.push(newUser);
             return newUser;
         },
 
         updateUser: (parent, args) => {
             const { id, name, email, age } = args;
-            const user = users.find(u => u.id === id);
+            const user = data.users.find(u => u.id === id);
 
             if (!user) {
                 throw new Error(`User with ID ${id} not found`);
@@ -71,16 +71,16 @@ const resolvers = {
         },
 
         deleteUser: (parent, args) => {
-            const index = users.findIndex(u => u.id === args.id);
-
+            const index = data.users.findIndex(u => u.id === args.id);
+            
             if (index === -1) {
                 throw new Error(`User with ID ${args.id} not found`);
             }
 
-            const deletedUser = users.splice(index, 1)[0];
+            const deletedUser = data.users.splice(index, 1)[0];
 
             // Also delete user's posts
-            posts = posts.filter(p => p.authorId !== args.id);
+            data.posts = data.posts.filter(p => p.authorId !== args.id);
 
             return deletedUser;
         },
@@ -94,44 +94,44 @@ const resolvers = {
             }
 
             // Check if author exists
-            const author = users.find(u => u.id === authorId);
+            const author = data.users.find(u => u.id === authorId);
             if (!author) {
                 throw new Error(`Author with ID ${authorId} not found`);
             }
 
             const newPost = {
-                id: String(posts.length + 1),
+                id: String(data.posts.length + 1),
                 title,
                 content,
                 authorId
             };
 
-            posts.push(newPost);
+            data.posts.push(newPost);
             return newPost;
         },
 
         updatePost: (parent, args) => {
             const { id, title, content } = args;
-            const post = posts.find(p => p.id === id);
+            const post = data.posts.find(p => p.id === id);
 
             if (!post) {
                 throw new Error(`Post with ID ${id} not found`);
             }
 
             if (title !== undefined) post.title = title;
-            if (content !== indefined) post.content = content;
+            if (content !== undefined) post.content = content;
 
             return post;
         },
 
         deletePost: (parent, args) => {
-            const index = posts.findIndex(p => p.id === args.id);
+            const index = data.posts.findIndex(p => p.id === args.id);
 
             if (index === -1) {
                 throw new Error(`Post with ID ${args.id} not found`);
             }
 
-            const deletedPost = posts.splice(index, 1)[0];
+            const deletedPost = data.posts.splice(index, 1)[0];
             return deletedPost;
         }
     },
@@ -139,13 +139,13 @@ const resolvers = {
     // Field resolvers for relationships
     User: {
         posts: (parent) => {
-            return posts.filter(p => p.authorId === parent.id);
+            return data.posts.filter(p => p.authorId === parent.id);
         }
     },
 
     Post: {
         author: (parent) => {
-            return users.find(u => u.id === parent.authorId);
+            return data.users.find(u => u.id === parent.authorId);
         }
     }
 };

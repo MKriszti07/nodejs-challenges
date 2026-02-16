@@ -1,0 +1,94 @@
+1. Get All Users
+query {
+  users {
+    id
+    name
+    email
+    age
+  }
+}
+
+2. Get User with Posts
+query {
+  user(id: "1") {
+    id
+    name
+    email
+    posts {
+      id
+      title
+      content
+    }
+  }
+}
+
+3. Get All Posts with Authors
+query {
+  posts {
+    id
+    title
+    content
+    author {
+      id
+      name
+      email
+    }
+  }
+}
+
+4. Get Posts by Specific Author
+query {
+  postsByAuthor(authorId: "1") {
+    id
+    title
+    content
+  }
+}
+
+----
+
+1. Create a New User
+mutation {
+  createUser(name: "Alice Brown", email: "alice@example.com", age: 28) {
+    id
+    name
+    email
+    age
+  }
+}
+
+2. Update a User
+mutation {
+  updateUser(id: "1", name: "John Updated", age: 31) {
+    id
+    name
+    email
+    age
+  }
+}
+
+3. Create a New Post
+mutation {
+  createPost(
+    title: "My First GraphQL Post"
+    content: "This is the content of my post"
+    authorId: "1"
+  ) {
+    id
+    title
+    content
+    author {
+      name
+      email
+    }
+  }
+}
+
+4. Delete a User
+mutation {
+  deleteUser(id: "2") {
+    id
+    name
+    email
+  }
+}
