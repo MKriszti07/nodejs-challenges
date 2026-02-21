@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Socket.IO Chat - Day 35</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        #messages {
+            border: 1px solid #ccc;
+            min-height: 200px;
+            padding: 10px;
+            margin-bottom: 10px;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+
+        .message {
+            margin-bottom: 5px;
+        }
+
+        .system {
+            color: #888;
+            font-style: italic;
+        }
+
+        #inputArea {
+            display: flex;
+            gap: 8px;
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 8px;
+        }
+
+        #sendBtn {
+            padding: 8px 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Day 35: Socket.IO Chat</h1>
+
+    <div id="messages"></div>
+
+    <div id="inputArea">
+        <input id="messageInput" type="text" placeholder="Type a message..." />
+        <button id="sendBtn">Send</button>
+    </div>
+
+    <p id="typingIndicator" style="font-size: 0.9em; color: #555;"></p>
+
+    <!-- 1) Load Socket.IO client (served automatically by server) -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // 2) Connect to server
+        const socket = io();    // default: same origin, same port
+
+        const messagesEl = document.getElementById('messages');
+        const inputEl = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const typingIndicatorEl = document.getElementById('typingIndicator');
+
+        function addMessage(text, cssClass = '') {
+            const div = document.createElement('div');
+            div.className = 'message ' + cssClass;
+            div.textContent = text;
+            messagesEl.appendChild(div);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        // 3) Listen for chatMessage events from server
+        socket.on('chatMessage', (data) => {
+            const { id, text, timestamp } = data;
+            const timeStr = new Date(timestamp).toLocaleTimeString();
+            addMessage(`[${timeStr}] ${id}: ${text}`);
+        });
+
+        // 4) System/server messages
+        socket.on('serverMessage', (text) => {
+            addMessage(text, 'system');
+        });
+
+        // 5) Typing indicator
+        socket.on('typing', ({ id, isTyping }) => {
+            typingIndicatorEl.textContent = isTyping ? `User ${id} is typing...` : '';
+        });
+
+        // 6) Send message on button click
+        sendBtn.addEventListener('click', () => {
+            const msg = inputEl.value.trim();
+            if (!msg) return;
+
+            socket.emit('chatMessage', msg);
+            inputEl.value = '';
+            socket.emit('typing', false); 
+        });
+
+        // 7) Send "typing" events
+        let typingTimeout;
+        inputEl.addEventListener('input', () => {
+            socket.emit('typing', inputEl.value.length > 0);
+
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                socket.emit('typing', false);
+            }, 1000);
+        });
+
+        // 8) Submit on Enter key
+        inputEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                sendBtn.click();
+            }
+        });
+
+        // 9) Connection / disconnect logs
+        socket.on('connect', () => {
+            addMessage(`Connected as ${socket.id}`, 'system');
+        });
+
+        socket.on('disconnect', () => {
+            addMessage('Disconnected from server', 'system');
+        });
+    </script>
+</body>
+
+</html>
