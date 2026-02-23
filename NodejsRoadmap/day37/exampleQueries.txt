@@ -1,0 +1,31 @@
+1. Simple hello
+query {
+  hello
+}
+
+2. Get all books
+query {
+  books {
+    id
+    title
+    author
+  }
+}
+
+3. Get a single book
+query {
+  book(id: "1") {
+    id
+    title
+    author
+  }
+}
+
+4. Add a new book (mutation)
+mutation {
+  addBook(title: "Refactoring", author: "Martin Fowler") {
+    id
+    title
+    author
+  }
+}
