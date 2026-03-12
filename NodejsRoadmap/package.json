@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:day25": "mocha day25/test/**/*.test.js"
+    "test:day25": "mocha day25/test/**/*.test.js",
+    "test:day48": "jest day48/tests/**/*.test.js"
   },
   "keywords": [],
   "author": "",
@@ -48,7 +49,9 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "chai": "^6.2.2",
-    "mocha": "^11.7.5"
+    "jest": "^30.3.0",
+    "mocha": "^11.7.5",
+    "supertest": "^7.2.2"
   },
   "overrides": {
     "diff": "^8.0.3",
