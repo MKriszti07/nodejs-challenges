@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test:day25": "mocha day25/test/**/*.test.js",
-    "test:day48": "jest day48/tests/**/*.test.js"
+    "test:day48": "jest day48/tests/**/*.test.js",
+    "test:day54": "node --test day54/test/**/*.test.js",
+    "start:day54": "node day54/index.js"
   },
   "keywords": [],
   "author": "",

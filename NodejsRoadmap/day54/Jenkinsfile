@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+    }
+
+    environment {
+        NODE_ENV = 'test'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install') {
+            steps {
+                sh 'node -v'
+                sh 'npm -v'
+                // If package-lock.json exists, npm ci is best. Otherwise fallback to npm i.
+                sh 'npm ci || npm i'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm run test:day54'
+            }
+        }
+
+        stage('Build (Optional)') {
+            when {
+                expression { fileExists('Dockerfile') }
+            }
+            steps {
+                sh 'docker build -t day54-jenkins-cicd:${BUILD_NUMBER} .'
+            }
+        }
+
+        stage('Deploy (Optional, local)') {
+            when {
+                allOf {
+                    expression { fileExists('Dockerfile') }
+                    expression { sh(script: "command -v docker >/dev/null 2>&1", returnStatus: true) == 0 }
+                }
+            }
+            steps {
+                sh '''
+                    set -e
+                    docker rm -f day54-jenkins-cicd || true
+                    docker run -d --name day54-jenkins-cicd -p 3001:3000 day54-jenkins-cicd:${BUILD_NUMBER} || true
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build succeeded.'
+        }
+        failure {
+            echo 'Build failed.'
+        }
+        always {
+            // Jenkins will show the console logs; for a minimal practice, this is enough.
+            cleanWs()
+        }
+    }
+}
