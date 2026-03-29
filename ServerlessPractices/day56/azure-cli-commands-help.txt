@@ -1,0 +1,37 @@
+RG="rg-day56-functions"
+LOCATION="westeurope"   # choose what’s closest/cheapest for you
+STORAGE="day56st$RANDOM"
+APP="day56-func-$RANDOM"
+
+az group create --name "$RG" --location "$LOCATION"
+
+az storage account create \
+  --resource-group "$RG" \
+  --name "$STORAGE" \
+  --location "$LOCATION" \
+  --sku Standard_LRS \
+  --kind StorageV2 \
+  --min-tls-version TLS1_2 \
+  --allow-blob-public-access false
+
+az functionapp create \
+  --resource-group "$RG" \
+  --name "$APP" \
+  --storage-account "$STORAGE" \
+  --consumption-plan-location "$LOCATION" \
+  --functions-version 4 \
+  --runtime node \
+  --runtime-version 20 \
+  --disable-app-insights true
+
+az functionapp update \
+  --resource-group "$RG" \
+  --name "$APP" \
+  --set httpsOnly=true
+
+//From your Day56 folder:
+npm run build
+func azure functionapp publish "$APP"
+
+az group delete --name "$RG" --yes --no-wait
+
