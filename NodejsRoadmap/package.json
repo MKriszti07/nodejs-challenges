@@ -12,7 +12,8 @@
     "prisma:migrate:day55": "prisma migrate dev --name init --schema=./day55/prisma/schema.prisma --config=./day55/prisma/prisma.config.ts",
     "prisma:generate:day55": "prisma generate --schema=./day55/prisma/schema.prisma --config=./day55/prisma/prisma.config.ts",
     "prisma:studio:day55": "prisma studio --schema=./day55/prisma/schema.prisma --config=./day55/prisma/prisma.config.ts",
-    "db:seed:day55": "npm run prisma:generate:day55 && node day55/prisma/seed.js"
+    "db:seed:day55": "npm run prisma:generate:day55 && node day55/prisma/seed.js",
+    "test:day65": "jest day65/tests/*.test.js"
   },
   "keywords": [],
   "author": "",
@@ -25,7 +26,7 @@
     "@prisma/client": "^7.6.0",
     "@prisma/config": "^7.6.0",
     "@socket.io/redis-adapter": "^8.3.0",
-    "axios": "^1.13.6",
+    "axios": "^1.15.0",
     "bcrypt": "^6.0.0",
     "better-sqlite3": "^12.8.0",
     "body-parser": "^2.2.2",
@@ -68,6 +69,7 @@
     "chai": "^6.2.2",
     "jest": "^30.3.0",
     "mocha": "^11.7.5",
+    "nock": "^14.0.12",
     "supertest": "^7.2.2"
   },
   "overrides": {
