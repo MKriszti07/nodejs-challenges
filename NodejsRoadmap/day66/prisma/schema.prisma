@@ -1,0 +1,29 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+}
+
+model User {
+    id        Int            @id @default(autoincrement())
+    email     String         @unique
+    password  String // practice only (pain string). In real life, hash with bcrypt/argon2.
+    tokens    RefreshToken[]
+    createdAt DateTime       @default(now())
+}
+
+model RefreshToken {
+    id         Int       @id @default(autoincrement())
+    userId     Int
+    user       User      @relation(fields: [userId], references: [id])
+    tokenHash  String    @unique
+    revokedAt  DateTime?
+    expiresAt  DateTime
+    replacedBy String? // tokenHash of replacement (optional audit)
+    createdAt  DateTime  @default(now())
+
+    @@index([userId])
+    @@index([expiresAt])
+}
