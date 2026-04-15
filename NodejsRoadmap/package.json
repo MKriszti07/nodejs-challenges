@@ -13,7 +13,9 @@
     "prisma:generate:day55": "prisma generate --schema=./day55/prisma/schema.prisma --config=./day55/prisma/prisma.config.ts",
     "prisma:studio:day55": "prisma studio --schema=./day55/prisma/schema.prisma --config=./day55/prisma/prisma.config.ts",
     "db:seed:day55": "npm run prisma:generate:day55 && node day55/prisma/seed.js",
-    "test:day65": "jest day65/tests/*.test.js"
+    "test:day65": "jest day65/tests/*.test.js",
+    "day66:prisma:migrate": "prisma migrate dev --name init --schema=./day66/prisma/schema.prisma --config=./day66/prisma/prisma.config.ts",
+    "day66:db:seed": "node day66/prisma/seed.js"
   },
   "keywords": [],
   "author": "",
@@ -55,7 +57,7 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
-    "prisma": "^6.19.3",
+    "prisma": "^7.7.0",
     "redis": "^5.11.0",
     "socket.io": "^4.8.3",
     "swagger-jsdoc": "^6.2.8",
@@ -70,6 +72,7 @@
     "jest": "^30.3.0",
     "mocha": "^11.7.5",
     "nock": "^14.0.12",
+    "sqlite3": "^6.0.1",
     "supertest": "^7.2.2"
   },
   "overrides": {
