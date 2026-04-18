@@ -50,7 +50,7 @@
     "jsonwebtoken": "^9.0.3",
     "migrate": "^2.1.0",
     "mongodb": "^7.1.0",
-    "mongoose": "^9.2.3",
+    "mongoose": "^9.4.1",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
     "node-cron": "^4.2.1",
