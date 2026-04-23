@@ -2,7 +2,7 @@ import express from "express";
 import React from "react";
 import { renderToPipeableStream } from "react-dom/server";
 
-import { listTodos, getTodoByid } from "./api.js";
+import { listTodos, getTodoById } from "./api.js";
 import { ErrorPage, HomePage, NotFoundPage, TodoPage } from "./views.js";
 import { htmlShell } from "./html.js";
 
@@ -21,6 +21,40 @@ export function createRouter() {
       return renderError(res, err);
     }
   });
+
+  router.get('/todos/:id', async (req, res) => {
+    try {
+      const todo = await getTodoById(req.params.id);
+      if (!todo) {
+        res.status(404);
+        return ssr(req, res, {
+          title: 'Not Found', 
+          element: React.createElement(NotFoundPage, { path: req.originalUrl }),
+          initialState: { path: req.originalUrl }
+        });
+      }
+
+      return ssr(req, res, {
+        title: `Todo #${todo.id}`,
+        element: React.createElement(TodoPage, { todo }),
+        initialState: { todo }
+      });
+    } catch (err) {
+      return renderError(res, err);
+    }
+  });
+
+  // fallback 404
+  router.use((req, res) => {
+    res.status(404);
+    return ssr(req, res, {
+      title: 'Not found',
+      element: React.createElement(NotFoundPage, { path: req.originalUrl }),
+      initialState: { path: req.originalUrl }
+    });
+  });
+
+  return router;
 }
 
 function renderError(res, err) {
