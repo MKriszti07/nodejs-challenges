@@ -1,5 +1,6 @@
 NodejsRoadmap/uploads/1769595261965-829807336-white-cat-breeds-kitten-in-grass-67bf648a54a3b.jpg
 NodejsRoadmap/day50/.migrate
-ServerlessPractices/day56/node_modules/
 NodejsRoadmap/day66/prisma/migrations/migration_lock.toml
 NodejsRoadmap/day66/prisma/migrations/20260415132822_init/migration.sql
+NodejsRoadmap/*/node_modules/*
+IndependentPracticeTasks/*/node_modules/*
