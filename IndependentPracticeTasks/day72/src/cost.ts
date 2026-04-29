@@ -53,6 +53,15 @@ export function calculateQueryCost(query: string, variables: Record<string, unkn
                 const normalized = Math.max(1, Math.min(config.maxLimitArg, limit));
                 cost += normalized; // add extra cost proportional to returned items
             }
+
+            if (fieldName === 'heavyStats') {
+                const itArg = node.arguments?.find(a => a.name.value === 'iterations');
+                const it = readIntArg(itArg) ?? 50_000;
+                const normalized = Math.max(0, Math.min(2_000_000, it));
+                cost += Math.ceil(normalized / 25_000); // 1 cost per 25k iters
+            }
         }
-    })
+    });
+
+    return cost;
 }
