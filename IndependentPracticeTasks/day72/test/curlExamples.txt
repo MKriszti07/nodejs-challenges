@@ -1,0 +1,24 @@
+Try it (curl examples)
+
+1) Normal query (low cost)
+
+curl -s http://localhost:4000/graphql \
+  -H 'content-type: application/json' \
+  -H 'x-api-key: demo' \
+  --data '{"query":"{ book(id:\"1\"){ id title } }"}' | jq
+
+2) Higher-cost query (cost scales with limit)
+
+curl -s http://localhost:4000/graphql \
+  -H 'content-type: application/json' \
+  -H 'x-api-key: demo' \
+  --data '{"query":"{ searchBooks(q:\"a\", limit: 50){ id title } }"}' | jq
+  
+Repeat it a few times quickly to trigger limiting.
+
+3) Variable-based cost
+
+curl -s http://localhost:4000/graphql \
+  -H 'content-type: application/json' \
+  -H 'x-api-key: demo' \
+  --data '{"query":"query($l:Int!){ searchBooks(q:\"o\", limit:$l){ id } }","variables":{"l":50}}' | jq
