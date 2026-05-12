@@ -1,0 +1,20 @@
+{
+  "name": "day73",
+  "version": "1.0.0",
+  "description": "Day 73 practice project - GraphQL Federation",
+  "type": "module",
+  "scripts": {
+    "start:users": "node users-subgraph/index.js",
+    "start:products": "node products-subgraph/index.js",
+    "start:gateway": "node gateway/index.js",
+    "start": "concurrently \"npm run start:users\" \"npm run start:products\" \"npm run start:gateway\""
+  },
+  "dependencies": {
+    "@apollo/gateway": "^2.14.0",
+    "@apollo/server": "^5.5.1",
+    "@apollo/subgraph": "^2.14.0",
+    "concurrently": "^9.2.1",
+    "graphql": "^16.14.0",
+    "graphql-tag": "^2.12.6"
+  }
+}

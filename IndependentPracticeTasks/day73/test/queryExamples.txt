@@ -1,0 +1,12 @@
+query {
+  products {
+    id
+    name
+    price
+    seller {
+      id
+      name
+      email
+    }
+  }
+}
