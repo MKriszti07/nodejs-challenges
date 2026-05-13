@@ -1,0 +1,19 @@
+{
+  "name": "independentpracticetasks",
+  "version": "1.0.0",
+  "description": "Day 74 practice project - Microservices with Node.js",
+  "type": "module",
+  "scripts": {
+    "dev:gateway": "nodemon gateway.js",
+    "dev:users": "nodemon users-service.js",
+    "dev:orders": "nodemon orders-service.js",
+    "dev": "node --run dev:users & node --run dev:orders & node --run dev:gateway"
+  },
+  "dependencies": {
+    "axios": "^1.16.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
