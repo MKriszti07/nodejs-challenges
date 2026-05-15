@@ -4,3 +4,6 @@ NodejsRoadmap/day66/prisma/migrations/migration_lock.toml
 NodejsRoadmap/day66/prisma/migrations/20260415132822_init/migration.sql
 NodejsRoadmap/*/node_modules/*
 IndependentPracticeTasks/*/node_modules/*
+IndependentPracticeTasks/*/dist/*
+*/package-lock.json
+IndependentPracticeTasks/*/package-lock.json
