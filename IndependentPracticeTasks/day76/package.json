@@ -1,0 +1,30 @@
+{
+  "name": "day76",
+  "version": "1.0.0",
+  "description": "Day 76 challenge: Real-Time Analytics with Node.js, Express, and Socket.IO",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "socket.io",
+    "realtime",
+    "analytics"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=26"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dayjs": "^1.11.21",
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3",
+    "zod": "^4.4.3"
+  }
+}
